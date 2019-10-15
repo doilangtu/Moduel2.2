@@ -13,10 +13,10 @@ public class CountInArr {
 
         //phan tu dem
         System.out.println("phan  tu k");
-        char k = (char) scanner.nextLong();
+        String k = scanner.nextLine();
         //duyet mang
         for (int i = 0;i<arr.length();i++){
-            if (arr.charAt(i) == k){
+            if (arr.charAt(i) == k.charAt(0)){
                 count ++;
             }
         }
