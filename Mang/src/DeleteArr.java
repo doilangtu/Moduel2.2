@@ -1,37 +1,36 @@
 import java.util.Scanner;
-
-public class DeleteArr {
-    public static void main(String[] args) {
-        int size,i,c;
+public class DeleteArr{
+public static void main(String[] args) {
+        int n, i, c;
         Scanner scanner = new Scanner(System.in);
 
-        //
         do {
-            System.out.println("nhap so phan tu cuar mang");
-            size = scanner.nextInt();
-        }while (size >20);
-        int [] arr = new int [ size];
-        System.out.println("nhap cac phan tu trong mang");
-        for ( i= 0 ; i<size;i++){
-            System.out.printf("a[%d] = ",i);
-            arr[i] = scanner.nextInt();
+        System.out.println("Nhập vào số phần tử của mảng: ");
+        n = scanner.nextInt();
+        } while (n <= 0);
+
+        int[] Arr = new int[n];
+
+        System.out.println("Nhập các phần tử cho mảng: ");
+        for (i = 0; i < n; i++) {
+        System.out.printf("a[%d] :" , i);
+        Arr[i] = scanner.nextInt();
         }
-        // phan tu  k
-        System.out.println("nhap phan tu k");
+
+        System.out.println("Nhập số nguyên k: ");
         int k = scanner.nextInt();
-        //sap xep
-        for ( c=i=0;c<arr.length;i++){
-            if (arr[i] != k){
-                arr[c] = arr[i];
-                c++;
-            }
-        }
-        size = c;
-        System.out.println("mang sau khi xoa la " + k );
-        for (i = 0;i<arr.length;i++){
-            System.out.println(arr[i]+"");
-        }
-    }
 
+        for (c = i = 0; i < n; i++) {
+        if (Arr[i] != k) {
+        Arr[c] = Arr[i];
+        c++;
+        }
+        }
 
-}
+        n = c;
+        System.out.println("Mảng còn lại sau khi xóa phần tử " + k + " là: ");
+        for (i = 0; i < n; i++) {
+        System.out.print(Arr[i] + "\t");
+
+        }
+        }}
