@@ -1,5 +1,7 @@
 package LopPointAndMovePoint;
 
+import java.util.Arrays;
+
 public class MovePoint extends Point {
     private float xSpeed = 0.0f;
     private float ySpeed = 0.0f;
@@ -41,13 +43,22 @@ public class MovePoint extends Point {
         float [ ] arr = {getxSpeed(),getySpeed()};
         return arr;
     }
+    public MovePoint move(){
+        float x = getX();
+        float y = getY();
+        x += this.xSpeed;
+        y += this.ySpeed;
+        setY(y);
+        setX(x);
+        return this;
+    }
+
 
     public String toString(){
-        return
+        return "Toa do sau khi tang la "+
                 "x = "+super.getX()
-                        +"y ="+super.getY()
-                +"xSpeed= "+this.getxSpeed()+
-                "ySpeed = "+ this.getySpeed()+
-                "speed = "+getSpeed();
+                        +"\n y ="+super.getY()
+                +
+                "\n speed = "+ Arrays.toString(getSpeed());
     }
 }

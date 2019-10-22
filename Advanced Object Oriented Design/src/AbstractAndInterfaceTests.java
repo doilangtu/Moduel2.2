@@ -1,11 +1,11 @@
 
-import animal.Animal;
-import animal.Chicken;
-import animal.Tiger;
-import edible.Edible;
-import fruit.Fruit;
-import fruit.Orange;
-import fruit.Apple;
+import ExampleAnimal.fruit.animal.Animal;
+import ExampleAnimal.fruit.animal.Chicken;
+import ExampleAnimal.fruit.animal.Tiger;
+import ExampleAnimal.fruit.edible.Edible;
+import ExampleAnimal.fruit.Fruit;
+import ExampleAnimal.fruit.Orange;
+import ExampleAnimal.fruit.Apple;
 
 public class AbstractAndInterfaceTests {
     public static void main(String[] args) {
@@ -18,6 +18,10 @@ public class AbstractAndInterfaceTests {
             if (animal instanceof Chicken) {
                 Edible edibler = (Chicken) animal;
                 System.out.println(edibler.howToEat());
+            }
+            if (animal instanceof Tiger){
+                Edible edible =(Tiger) animal;
+                System.out.println(edible.howToEat());
             }
         }
 

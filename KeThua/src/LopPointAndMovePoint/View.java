@@ -13,12 +13,15 @@ public class View {
         point.setY(sc.nextFloat());
 
         Point movePoint = new MovePoint();
+        movePoint.setX(point.getX());
+        movePoint.setY(point.getY());
+
         System.out.println("nhap xSPeed");
         ((MovePoint)movePoint).setxSpeed(sc.nextFloat());
         System.out.println("nhap ySPeed");
         ((MovePoint)movePoint).setySpeed(sc.nextFloat());
-
         System.out.println(point.toString());
-        System.out.println((MovePoint)movePoint);
+        movePoint = ((MovePoint)movePoint).move();
+        System.out.println(movePoint.toString());
     }
 }
