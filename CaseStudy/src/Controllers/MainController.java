@@ -227,10 +227,8 @@ public class MainController {
 
         System.out.println("Enter Gender Of Customer(Male/Female/Unknow:");
         cus.setGender(sc.nextLine());
-        while (!CheckValidate.checkGender(cus.getGender())){
-            System.out.println("Enter Gender Of Customer(Male/Female/Unknow:");
-            cus.setGender(sc.nextLine());
-        }
+        CheckValidate.checkGender(cus.getGender());
+
         //Check IdCard
         content   = "Id Card Of Customer(From 10000000 To 999999999";
        erMes="IdCard should be from 100000000 to 999999999 And one number integer";

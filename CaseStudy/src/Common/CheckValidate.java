@@ -23,25 +23,19 @@ public static boolean checkNameServies(String str){
          "|^((0[1-9]|[12][0-9]|30)/(0[469]|11)/((19|2[0-9])[0-9]{2}))$";
             return str.matches(regex);
     }
-    public static boolean checkGender(String content){
-    while (true){
-        try {
+    public static void checkGender(String content){
+
+
             content.trim().toLowerCase().replaceAll("\\s+","");
-            if (content =="male" ||content =="female"||content =="unknow"){
                 for (int i = 0; i <content.length() ; i++) {
                     if (content.charAt(i)==0){
                         content.toUpperCase();
                     }
-
                 }
 
-            };
-        }catch (Exception ex){
-            System.out.println(ex.getMessage());
-        }
         }
 
-}
+
 
 public static boolean checkEmail(String str){
     regex ="^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$";

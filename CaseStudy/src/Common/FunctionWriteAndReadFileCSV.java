@@ -36,7 +36,7 @@ public class FunctionWriteAndReadFileCSV {
     private static String [] headerRecordCustomer = new String []{
             "id","customerName","birthdayCustomer","gender","idCard","mobilePhone","email","typeOfCustomer","address"
     };
-
+   
     private static final int NUM_OF_LINE_SKIP = 1;
 
 
