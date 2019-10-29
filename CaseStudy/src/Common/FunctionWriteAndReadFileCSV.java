@@ -22,6 +22,7 @@ public class FunctionWriteAndReadFileCSV {
     private static final String pathRoom = "src/Data/Room.csv";
     private static final String pathHouse = "src/Data/House.csv";
     private static final String pathCustomer = "src/Data/Customer.csv";
+    private static final String pathBooking = "src/Data/Booking.csv";
 
 
     private static String[] headerRecordVilla = new String[]{"id", "nameService",
@@ -36,7 +37,12 @@ public class FunctionWriteAndReadFileCSV {
     private static String [] headerRecordCustomer = new String []{
             "id","customerName","birthdayCustomer","gender","idCard","mobilePhone","email","typeOfCustomer","address"
     };
-   
+    private static String [] headerRecordBooking = new String []{
+            "id","customerName","birthdayCustomer","gender","idCard","mobilePhone","email","typeOfCustomer","address",
+            "id", "nameService",
+            "useArea", "rentsCost", "typeOfRents","amountPeople"
+    };
+
     private static final int NUM_OF_LINE_SKIP = 1;
 
 
@@ -126,7 +132,7 @@ public class FunctionWriteAndReadFileCSV {
             csvWriter.writeNext(headerRecordHouse);
             for (Customer customer : arrayList) {
                 csvWriter.writeNext(new String[]{
-                        customer.getId(), customer.getCustomerName(),
+                        customer.getId(), customer.getCustomerName(), customer.getBirthdayCustomer(),
                         customer.getGender(),
                         String.valueOf(customer.getIdCard()),
                         String.valueOf(customer.getMobilePhone()),
@@ -134,12 +140,65 @@ public class FunctionWriteAndReadFileCSV {
                         customer.getTypeOfCustomer(),customer.getAddress()
 
                 });
+
             }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
+    //function write Booking to File CSV
+    public static void writeBookingToCSV(ArrayList<Customer> arrayList){
+        try (Writer writer = new FileWriter(pathBooking);
+             CSVWriter csvWriter = new CSVWriter(writer,
+                     CSVWriter.DEFAULT_SEPARATOR
+                     , CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
+            csvWriter.writeNext(headerRecordHouse);
+            for (Customer customer : arrayList) {
+                csvWriter.writeNext(new String[]{
+                        customer.getId(), customer.getCustomerName(), customer.getBirthdayCustomer(),
+                        customer.getGender(),
+                        String.valueOf(customer.getIdCard()),
+                        String.valueOf(customer.getMobilePhone()),
+                        customer.getEmail(),
+                        customer.getTypeOfCustomer(),customer.getAddress(),customer.getServices().getId(),
+                        customer.getServices().getNameService(),String.valueOf(customer.getServices().getUseArea()),
+                        String.valueOf(customer.getServices().getRentsCost()),
+                        customer.getServices().getTypeOfRents(),String.valueOf(customer.getServices().getAmountPeople())
 
+                });
+
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    //Booking get from CSV
+    public static ArrayList<Customer> getBookingFromCSV() {
+        Path path = Paths.get(pathBooking);
+        if (!Files.exists(path)) {
+            try {
+                Writer writer = new FileWriter(pathBooking);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        ColumnPositionMappingStrategy<Customer> strategy = new ColumnPositionMappingStrategy<>();
+        strategy.setType(Customer.class);
+        strategy.setColumnMapping(headerRecordBooking);
+        CsvToBean<Customer> csvToBean = null;
+        try {
+            csvToBean = new CsvToBeanBuilder<Customer>(new FileReader(pathBooking))
+                    .withMappingStrategy(strategy)
+                    .withSeparator(DEFAULT_SEPARATOR)
+                    .withQuoteChar(DEFAULT_QUOTE)
+                    .withSkipLines(NUM_OF_LINE_SKIP)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return (ArrayList<Customer>) csvToBean.parse();
+    }
     //function get list Villa From File Csv
     public static ArrayList<Villa> getVillaFromCSV() {
         Path path = Paths.get(pathVilla);
@@ -251,5 +310,12 @@ public class FunctionWriteAndReadFileCSV {
         return (ArrayList<House>) csvToBean.parse();
     }
 
-
+public static String getNameServiceFromfile(String csvline){
+        String name = "";
+        if (csvline !=null){
+            String[]  splitData = csvline.split(",");
+            name = splitData[1];
+        }
+        return name;
+}
 }

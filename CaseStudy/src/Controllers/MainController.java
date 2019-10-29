@@ -18,8 +18,8 @@ public class MainController {
     MainController mainController = new MainController();
 
     private static Services addNewService(Services services) {
-        String content ="";
-        String erMes ="";
+        String content = "";
+        String erMes = "";
         services.setId(UUID.randomUUID().toString().replace("-", ""));
         sc.nextLine();
         System.out.println("Enter Name Service");
@@ -34,35 +34,35 @@ public class MainController {
 //Enter Area used
         content = "Enter Area Used";
         erMes = "Area Used Is Invalid (Area >30,Area Must Be A Double).Please Try Again";
-        services.setUseArea(CheckValidate.checkDouble(content,erMes));
+        services.setUseArea(CheckValidate.checkDouble(content, erMes));
         while (services.getUseArea() > 30) {
             System.out.println(erMes);
-            services.setUseArea(CheckValidate.checkDouble(content,erMes));
+            services.setUseArea(CheckValidate.checkDouble(content, erMes));
         }
         //Enter rent cost
         content = "Enter Rent cost";
         erMes = "Area Used Is Invalid (Rent Cost <0,Area Must Be A Double).Please Try Again";
-        services.setRentsCost( CheckValidate.checkDouble(content,erMes));
-        while (services.getRentsCost() <=0) {
+        services.setRentsCost(CheckValidate.checkDouble(content, erMes));
+        while (services.getRentsCost() <= 0) {
             System.out.println(erMes);
-            services.setRentsCost(CheckValidate.checkDouble(content,erMes));
+            services.setRentsCost(CheckValidate.checkDouble(content, erMes));
         }
 
 
         System.out.println("Enter Type Of Rent");
         sc.nextLine();
-        while (!CheckValidate.checkNameServies(services.getTypeOfRents())){
+        while (!CheckValidate.checkNameServies(services.getTypeOfRents())) {
             System.out.println("Enter Type Of Rent");
             sc.nextLine();
         }
         services.setTypeOfRents(sc.nextLine());
 
         content = "Enter Amount People";
-        erMes ="Amount In People InValid!!!(Number Of People >0 And <20";
-        services.setAmountPeople(CheckValidate.checkDouble(content,erMes));
-        while ( services.getAmountPeople() <=0 || services.getAmountPeople() >= 20) {
+        erMes = "Amount In People InValid!!!(Number Of People >0 And <20";
+        services.setAmountPeople(CheckValidate.checkDouble(content, erMes));
+        while (services.getAmountPeople() <= 0 || services.getAmountPeople() >= 20) {
             System.out.println(erMes);
-            services.setAmountPeople(CheckValidate.checkDouble(content,erMes));
+            services.setAmountPeople(CheckValidate.checkDouble(content, erMes));
         }
 
         return services;
@@ -84,11 +84,12 @@ public class MainController {
         System.out.println("Enter room standard");
         sc.nextLine();
         ((Villa) villa).setRoomStandard(sc.nextLine());
-        while (!CheckValidate.checkNameServies( ((Villa) villa).getRoomStandard())){
+        while (!CheckValidate.checkNameServies(((Villa) villa).getRoomStandard())) {
             System.out.println("Enter room standard");
 
             ((Villa) villa).setRoomStandard(sc.nextLine());
-        };
+        }
+        ;
         System.out.println("Enter Description");
         ((Villa) villa).setOtherDescriptionOfUtilities(sc.nextLine());
 
@@ -151,7 +152,8 @@ public class MainController {
         System.out.println("2.Show service");
         System.out.println("3.Add New customer");
         System.out.println("4.Show Information Customer");
-        System.out.println("5.Exit");
+        System.out.println("5.Add New Booking Resort");
+        System.out.println("6.Exit");
         int input = sc.nextInt();
         switch (input) {
             case 1:
@@ -167,6 +169,9 @@ public class MainController {
                 showInformationCustomer();
                 break;
             case 5:
+                addNewBookingResort();
+                break;
+            case 6:
                 System.exit(5);
             default:
                 System.out.println("false");
@@ -201,9 +206,10 @@ public class MainController {
                 backToMenu();
         }
     }
-    public static void addNewCustomer(){
+
+    public static void addNewCustomer() {
         String content = "";
-        String erMes ="";
+        String erMes = "";
         Customer cus = new Customer();
         cus.setId(UUID.randomUUID().toString().replace("-", ""));
 
@@ -212,15 +218,16 @@ public class MainController {
         sc.nextLine();
         System.out.println("Enter Name Customer :");
         cus.setCustomerName(sc.nextLine());
-        while (!CheckValidate.checkNameCustomer(cus.getCustomerName())){
-        System.out.println("Enter Name Customer :");
-        cus.setCustomerName(sc.nextLine());}
+        while (!CheckValidate.checkNameCustomer(cus.getCustomerName())) {
+            System.out.println("Enter Name Customer :");
+            cus.setCustomerName(sc.nextLine());
+        }
 
 
         System.out.println("BirthDay of Customer (Ex:dd/MM/yyyy):");
         cus.setBirthdayCustomer(sc.nextLine());
-        while (!CheckValidate.checkBirthday(cus.getBirthdayCustomer())){
-            System.out.println("This is not birth day.Please Try Again" );
+        while (!CheckValidate.checkBirthday(cus.getBirthdayCustomer())) {
+            System.out.println("This is not birth day.Please Try Again");
             System.out.println("BirthDay of Customer (Ex:dd/MM/yyyy):");
             cus.setBirthdayCustomer(sc.nextLine());
         }
@@ -230,24 +237,24 @@ public class MainController {
         CheckValidate.checkGender(cus.getGender());
 
         //Check IdCard
-        content   = "Id Card Of Customer(From 10000000 To 999999999";
-       erMes="IdCard should be from 100000000 to 999999999 And one number integer";
-       cus.setIdCard(CheckValidate.checkInteger(content,erMes));
-        while (cus.getIdCard()<=10000000 || cus.getIdCard()>=999999999){
+        content = "Id Card Of Customer(From 10000000 To 999999999";
+        erMes = "IdCard should be from 100000000 to 999999999 And one number integer";
+        cus.setIdCard(CheckValidate.checkInteger(content, erMes));
+        while (cus.getIdCard() <= 10000000 || cus.getIdCard() >= 999999999) {
             System.out.println(erMes);
-            cus.setIdCard(CheckValidate.checkInteger(content,erMes));
+            cus.setIdCard(CheckValidate.checkInteger(content, erMes));
         }
-        content   = "Mobile Phone Of Customer(From 0350000000 To 999999999";
-        erMes="Mobile should be from 100000000 to 999999999 And one number integer";
-        cus.setMobilePhone(CheckValidate.checkInteger(content,erMes));
-        while (cus.getMobilePhone()<=10000000 || cus.getMobilePhone()>=900000000){
+        content = "Mobile Phone Of Customer(From 0350000000 To 999999999";
+        erMes = "Mobile should be from 100000000 to 999999999 And one number integer";
+        cus.setMobilePhone(CheckValidate.checkInteger(content, erMes));
+        while (cus.getMobilePhone() <= 10000000 || cus.getMobilePhone() >= 900000000) {
             System.out.println(erMes);
-            cus.setIdCard(CheckValidate.checkInteger(content,erMes));
+            cus.setIdCard(CheckValidate.checkInteger(content, erMes));
         }
 
         System.out.println("Enter Email Of Customer(Ex:...@gmail.com) :");
         cus.setEmail(sc.nextLine());
-        while (!CheckValidate.checkEmail(cus.getEmail())){
+        while (!CheckValidate.checkEmail(cus.getEmail())) {
             System.out.println("Enter Email Of Customer(Ex:...@gmail.com) :");
             cus.setEmail(sc.nextLine());
         }
@@ -257,27 +264,32 @@ public class MainController {
         cus.setAddress(sc.nextLine());
         oldlist.add(cus);
         FunctionWriteAndReadFileCSV.writeCustomerToCSV(oldlist);
-        System.out.println("Add New Customer "+cus.getCustomerName()+"Successfully");
+        System.out.println("Add New Customer " + cus.getCustomerName() + "Successfully");
         backToMenu();
     }
-public static void showInformationCustomer(){
-    System.out.println("========ShowInfo Customer ==========");
-    ArrayList<Customer> listCus=FunctionWriteAndReadFileCSV.getCustomerFromCSV();
-    //sort
-    listCus.sort(new SortName());
-    for (Customer cus  : listCus){
-        System.out.println("-------------");
-        System.out.println(cus.toString());
+
+    public static void showInformationCustomer() {
+        System.out.println("========ShowInfo Customer ==========");
+        ArrayList<Customer> listCus = FunctionWriteAndReadFileCSV.getCustomerFromCSV();
+        //sort
+        listCus.sort(new SortName());
+        for (Customer cus : listCus) {
+            System.out.println("-------------");
+            System.out.println(cus.toString());
+        }
+
     }
 
-}
     private static void showServices() {
         System.out.println("\n==========ShowInfo==========" +
                 "\n1.Show All Villa." +
                 "\n2.Show All House." +
                 "\n3.Show All Room." +
-                "\n4.Back to Menu." +
-                "\n5.Exit.");
+                "\n4.Show All Name Villa Not Duplicate." +
+                "\n5. Show All Name House Not Duplicate" +
+                "\n6. Show All Name Name Not Duplicate\n" +
+                "\n7.Back to Menu." +
+                "\n8.Exit.");
         switch (sc.nextInt()) {
             case 1:
                 showAllVilla();
@@ -324,6 +336,81 @@ public static void showInformationCustomer(){
             System.out.println(room.showInformation());
             System.out.println("\n=================");
         }
+    }
+    private static void addNewBookingResort(){
+        ArrayList<Customer> listCustomer = FunctionWriteAndReadFileCSV.getCustomerFromCSV();
+
+        listCustomer.sort(new SortName());
+        int i=1;
+        for (Customer customer: listCustomer)
+             {
+                 System.out.println("-----------");
+                 System.out.println("No: " +i);
+                 System.out.println("-----------");
+                 i++;
+        }
+        System.out.println("Choose customer Booking");
+        Customer customer = listCustomer.get(sc.nextInt()-1);
+        System.out.println("\n1.  Booking Villa"+
+        "\n2. Booking  House"+
+        "\n3. Booking  Room"
+);
+        int choose = sc.nextInt();
+        switch (choose){
+            case 1:
+                i = 1;
+                ArrayList<Villa> listVillas = FunctionWriteAndReadFileCSV.getVillaFromCSV();
+                for (Villa villa: listVillas
+                     ) {
+                    System.out.println("--------------");
+                    System.out.println("No" +i);
+                    System.out.println(villa.showInformation());
+                    System.out.println("===============");
+                    i++;
+                }
+                System.out.println("Choose Villa booking");
+                Villa villa = listVillas.get(sc.nextInt()-1);
+                customer.setServices(villa);
+                break;
+            case 2:
+                ArrayList<House> listHouse = FunctionWriteAndReadFileCSV.getHouseFromCSV();
+                i=1;
+                for (House house:listHouse
+                     ) {
+                    System.out.println("==============");
+                    System.out.println("No "+i);
+                    System.out.println(house.showInformation());
+                    System.out.println("==============");
+                    i++;
+                }
+                System.out.println("Choose Hosed Booking");
+                House house  = listHouse.get(sc.nextInt()-1);
+                customer.setServices(house);
+                break;
+            case 3:
+                ArrayList<Room> listRoom = FunctionWriteAndReadFileCSV.getRoomFromCSV();
+                i=1;
+                for (Room room:listRoom
+                ) {
+                    System.out.println("==============");
+                    System.out.println("No "+i);
+                    System.out.println(room.showInformation());
+                    System.out.println("==============");
+                    i++;
+                }
+                System.out.println("Choose Hosed Booking");
+                Room room  = listRoom.get(sc.nextInt()-1);
+                customer.setServices(room);
+            default:
+                backToMenu();
+                break;
+        }
+        ArrayList<Customer> oldListBooking = FunctionWriteAndReadFileCSV.getBookingFromCSV();
+        oldListBooking.add(customer);
+        FunctionWriteAndReadFileCSV.writeCustomerToCSV(oldListBooking);
+        System.out.println("\n Add Booking for :"+ customer.getCustomerName() +"Successfully");
+        sc.nextLine();
+        backToMenu();
     }
 
 }

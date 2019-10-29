@@ -12,6 +12,8 @@ public class Customer  {
     private String Email;
     private String typeOfCustomer;
     private String Address;
+    private Services services;
+
 
     public Customer() {
     }
@@ -99,6 +101,13 @@ public class Customer  {
 
     public void setAddress(String address) {
         Address = address;
+    }
+    public Services getServices() {
+        return services;
+    }
+
+    public void setServices(Services services) {
+        this.services = services;
     }
 
     @Override
