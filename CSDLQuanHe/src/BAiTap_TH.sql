@@ -9,6 +9,8 @@ SELECT * FROM classicmodels.customers WHERE customerName LIKE '%M%';
 SELECT*FROM classicmodels.customers WHERE city IN ('Nantes', 'Las Vegas', 'Warszawa', 'NYC');
 UPDATE customers SET addressLine2='Level 2'WHERE customerNumber = '103';
 UPDATE customers SET customerName='Hung'WHERE customerNumber = '112';
+INSERT INTO customers (customerNumber, customerName,contactLastName,contactFirstName,city,country,phone,addressLine1)
+VALUE ('233','Hung','MANH','DO','Gia lai','bt','37.23.2345','Nani')  ;
     //Phan order
     SELECT * FROM classicmodels.orders;
 select*from classicmodels.orders where ordernumber between 10100 and 10110;
