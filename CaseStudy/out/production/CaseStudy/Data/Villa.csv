@@ -1,4 +1,7 @@
 id,nameService,useArea,rentsCost,typeOfRents,amountPeople,poolArea,roomStandard,otherDescriptionOfUtilities,numberOfFloors
-a83ece6100994c83bbc12f60f2b32a58,2,2.0,2,2,2,2,2,2,2
-e08b2f9f47c94d33aefd224ad1b57cd0,1,1.0,1,1,1,1,1,1,1
-42d3f971088a4f61966c74b9bd8c9b8c,2,2.0,2,2,2,2,2,2,2
+a83ece6100994c83bbc12f60f2b32a58,2,2.0,2.0,2,2.0,2,2,2,2.0
+e08b2f9f47c94d33aefd224ad1b57cd0,1,1.0,1.0,1,1.0,1,1,1,1.0
+42d3f971088a4f61966c74b9bd8c9b8c,2,2.0,2.0,2,2.0,2,2,2,2.0
+2ea4037a31c24c71a04531bac1bc1e9c,Villa,30.0,30.0,,19.0,3,Hawdawdawd,awdawdawdwadawdawd,30.0
+5d4c42ba7eac42f2bceea6a582d9f316,Villa,30.0,20.0,Hk,7.0,20,Kinh,doi,1.0
+40dbec53aae649ee8435e8c3e662a1c0,Thai,20.0,18.0,Kinh,17.0,12,Kinh,ădwawdawdawd,8.0

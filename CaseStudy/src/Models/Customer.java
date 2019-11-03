@@ -2,7 +2,7 @@ package Models;
 
 import java.util.Date;
 
-public class Customer  {
+public class Customer implements Comparable<Customer> {
     private String id;
     private String customerName;
     private String birthdayCustomer;
@@ -106,6 +106,7 @@ public class Customer  {
         return services;
     }
 
+
     public void setServices(Services services) {
         this.services = services;
     }
@@ -122,5 +123,10 @@ public class Customer  {
                 ", typeOfCustomer='" + typeOfCustomer + '\'' +
                 ", Address='" + Address + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Customer o) {
+        return 0;
     }
 }
