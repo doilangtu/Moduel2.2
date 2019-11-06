@@ -140,6 +140,7 @@ values('Massage',500000.00,1,'Tốt'),
 ('Thức ăn',150000,2,'Tốt'),
 ('Nước uống',100000,2,'Tốt'),
 ('Karaoke',5000000,5,'Tốt');
+
 insert into hopdong(NgayLamHopDong,NgayKetThuc,TienDatCoc,IDKhachHang,IDDichVu)
 values('2019-09-24','2019-10-01','5000000.00',1,3),
 ('2019-10-24','2019-10-30',2000000.00, 4, 1),
@@ -149,20 +150,19 @@ values('2019-09-24','2019-10-01','5000000.00',1,3),
 ('2019-01-12','2019-01-15',1000000.00, 7,4),
 ('2019-02-20','2019-03-01',2000000.00,9,7),
 ('2019-03-15','2019-04-12',1000000.00,6,4);
-
+insert into hopdongchitiet(SoLuong,IdHopDong,IDDichVuDiKem) values (30,1,1),(40,2,2),(50,3,3),(60,4,4),(50,5,5);
 
 select *from nhanvien where ((HoTen like 'H%') or (HoTen like 'T%') or (HoTen like 'K%'))and length(HoTen) <=15;
 
 select * from nhanvien  where ((DiaChi = 'Đà Nẵng') or (DiaChi = 'Quảng Trị')) and  ROUND(DATEDIFF(CURDATE(), NgaySinh) / 365, 0) >=18 and ROUND(DATEDIFF(CURDATE(), NgaySinh) / 365, 0) <50;
 
-select khachhang.IDKhachHang,khachhang.HoTen,khachhang.NgaySinh,khachhang.SoCMTND,khachhang.SDT,khachhang.Email,LoaiKhach.TenLoaiKhach,count(khachhang.IdLoaiKhachHang) as 'so lan dat'
-FROM khachhang,LoaiKhach
-WHERE khachhang.IdLoaiKhachHang = loaikhachhang.IdLoaiKhachHang  and khachhang.IdLoaiKhachHang =1
-group by HoTen
-order by khachhang.IdLoaiKhachHang asc;
-
-
-
+select HoTen,khachhang.IDLoaiKhach, count(*) as solandatphong
+ from khachhang
+ inner join hopdong
+ on khachhang.IDKhachHang = hopdong.IDKhachHang
+ where khachhang.IDLoaiKhach = 1
+ group by HoTen
+ order by solandatphong asc;
 
 select HoTen,TenLoaiKhach,tendichvu,NgayLamHopDong,NgayKetThuc,sum(DichVu.ChiPhiThue +hopdongchitiet.soluong*dichvudikem.gia) as "tong tien"
 from LoaiKhach
@@ -172,6 +172,37 @@ left join DichVu on  dichvu.IDLoaiDichVu =  hopdong.IDDichVu
 left join LoaiDichVu on  LoaiDichVu.IDLoaiDichVu =DichVu.IDLoaiDichVu
 left join hopdongchitiet on HopDongChiTiet.IDHopDong =hopdong.IDHopDong
 left join DichVuDiKem on  DichVuDiKem.IDDichVuDiKem =HopDongChiTiet.IDDichVuDiKem
-group by KhachHang.IDKhachHang
+group by KhachHang.IDKhachHang;
+select*from hopdong;
+select*from dichvu;
+select*from loaidichvu;
+select iddichvu,tendichvu,dientich,chiphithue,tenloaidichvu
+from dichvu inner join  loaidichvu on dichvu.idloaidichvu = loaidichvu.idloaidichvu
+where   not exists ( select IDHopDong from hopdong where ngaylamhopdong between  '2019-01-01' and  '2019-03-01');
+select iddichvu,tendichvu,dientich,songuoitoida,chiphithue,tenloaidichvu
+from dichvu inner join  loaidichvu on dichvu.idloaidichvu = loaidichvu.idloaidichvu
+where  exists (
+select IDHopDong,HoTen from khachhang inner join
+  hopdong on hopdong.idkhachhang = khachhang.idkhachhang
+  where ngaylamhopdong <=2018-12-31)
+  order by iddichvu asc;
 
+  select tendichvu,dientich,songuoitoida,chiphithue,tenloaidichvu
+from dichvu inner join  loaidichvu on dichvu.idloaidichvu = loaidichvu.idloaidichvu
+inner join hopdong on dichvu.iddichvu = hopdong.iddichvu
+where year(hopdong.ngaylamhopdong) like '2018' and  year(hopdong.ngaylamhopdong) not like '2019';
 
+-- tark 8
+  select DISTINCT  Hoten from khachhang;-- c1
+-- c2
+select hoten from khachhang
+group by hoten;
+-- c3
+select hoten from khachhang
+union
+select hoten from khachhang;
+
+-- tark 9
+select*from kieuthue;
+select*from hopdongchitiet;
+select*from dichvudikem;
