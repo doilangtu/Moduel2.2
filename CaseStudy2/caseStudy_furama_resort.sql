@@ -163,7 +163,7 @@ select HoTen,khachhang.IDLoaiKhach, count(*) as solandatphong
  where khachhang.IDLoaiKhach = 1
  group by HoTen
  order by solandatphong asc;
-
+-- tark 5
 select HoTen,TenLoaiKhach,tendichvu,NgayLamHopDong,NgayKetThuc,sum(DichVu.ChiPhiThue +hopdongchitiet.soluong*dichvudikem.gia) as "tong tien"
 from LoaiKhach
 left join KhachHang on KhachHang.IDLoaiKhach = LoaiKhach.IDLoaiKhach
@@ -172,6 +172,9 @@ left join DichVu on  dichvu.IDLoaiDichVu =  hopdong.IDDichVu
 left join LoaiDichVu on  LoaiDichVu.IDLoaiDichVu =DichVu.IDLoaiDichVu
 left join hopdongchitiet on HopDongChiTiet.IDHopDong =hopdong.IDHopDong
 left join DichVuDiKem on  DichVuDiKem.IDDichVuDiKem =HopDongChiTiet.IDDichVuDiKem
+
+
+-- tark 6
 group by KhachHang.IDKhachHang;
 select*from hopdong;
 select*from dichvu;
@@ -179,18 +182,20 @@ select*from loaidichvu;
 select iddichvu,tendichvu,dientich,chiphithue,tenloaidichvu
 from dichvu inner join  loaidichvu on dichvu.idloaidichvu = loaidichvu.idloaidichvu
 where   not exists ( select IDHopDong from hopdong where ngaylamhopdong between  '2019-01-01' and  '2019-03-01');
+
+
+-- tark 7
 select iddichvu,tendichvu,dientich,songuoitoida,chiphithue,tenloaidichvu
 from dichvu inner join  loaidichvu on dichvu.idloaidichvu = loaidichvu.idloaidichvu
-where  exists (
-select IDHopDong,HoTen from khachhang inner join
-  hopdong on hopdong.idkhachhang = khachhang.idkhachhang
-  where ngaylamhopdong <=2018-12-31)
+where exists (
+select hopdong.ngaylamhopdong from hopdong
+where year(hopdong.ngaylamhopdong) ='2018'
+ and hopdong.iddichvu = dichvu.iddichvu
+  and not exists (select hopdong.NgayLamHopDong from hopdong
+where year(hopdong.ngaylamhopdong) ='2019'
+ and hopdong.iddichvu = dichvu.iddichvu
+  ))
   order by iddichvu asc;
-
-  select tendichvu,dientich,songuoitoida,chiphithue,tenloaidichvu
-from dichvu inner join  loaidichvu on dichvu.idloaidichvu = loaidichvu.idloaidichvu
-inner join hopdong on dichvu.iddichvu = hopdong.iddichvu
-where year(hopdong.ngaylamhopdong) like '2018' and  year(hopdong.ngaylamhopdong) not like '2019';
 
 -- tark 8
   select DISTINCT  Hoten from khachhang;-- c1
