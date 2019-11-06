@@ -357,6 +357,11 @@ group by HoTen
 order by khachhang.IdLoaiKhachHang asc
 
 --tark 5
- select khachhang.IdKhachHang,khachhang.HoTen,loaikhachhang.TenLoaiKhach,hopdong.IdHopDong,dichvu.TenDichVu,hopdong.NgayLamHopDong,hopdong.NgayKetThuc,hopdong.TongTien
-  from khachhang,loaikhachhang,hopdong,dichvu,dichvudikem
-  where khachhang.IdLoaiKhachHang = loaikhachhang.IdLoaiKhachHang 
+ select khachhang.IdKhachHang,khachhang.HoTen,loaikhachhang.TenLoaiKhach,
+ hopdong.IdHopDong,dichvu.TenDichVu,hopdong.NgayLamHopDong,hopdong.NgayKetThuc,
+ hopdong.TongTien(dichvu.ChiPhiThue + dichvudikem.Gia* hopdongchitiet.Soluong),
+  from khachhang,dichvu,dichvudikem,hopdongchitiet
+  inner join hopdong on hopdong.IdHopDong = khachhang.IdLoaiKhachHang
+  inner join hopdong on  dichvu.IdDichVu = hopdong.IdHopDong
+  inner join loaikhachhang on khachhang.IdLoaiKhachHang = loaikhachhang.IdLoaiKhachHang
+
