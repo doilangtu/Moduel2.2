@@ -87,10 +87,11 @@ constraint IDKhachHang_fk foreign key(IDKhachHang) references KhachHang(IDKhachH
 constraint IDDichVu_fk foreign key(IDDichVu) references DichVu(IDDichVu)
 );
 create table HopDongChiTiet(
+IdHopDongChiTiet int unique auto_increment not null,
 SoLuong int,
 IDHopDong int,
 IDDichVuDiKem int,
-constraint IDHopDongChiTiet primary key(IDHopDong,IDDichVuDiKem),
+constraint IDHopDongChiTiet_1 primary key(IDHopDong,IDDichVuDiKem,IdHopDongChiTiet),
 constraint IDHopDong_fk foreign key(IDHopDong) references HopDong(IDHopDong),
 constraint IDDichVuDiKem_fk foreign key(IDDichVuDiKem) references DichVuDiKem(IDDichVuDiKem)
 );
@@ -208,6 +209,67 @@ union
 select hoten from khachhang;
 
 -- tark 9
-select*from kieuthue;
-select*from hopdongchitiet;
-select*from dichvudikem;
+select meses.month , count(month(NgayLamHopDong)) as sokhachhangdangki
+FROM
+           (
+                     SELECT 1 AS MONTH
+                      UNION SELECT 2 AS MONTH
+                      UNION SELECT 3 AS MONTH
+                      UNION SELECT 4 AS MONTH
+                      UNION SELECT 5 AS MONTH
+                      UNION SELECT 6 AS MONTH
+                      UNION SELECT 7 AS MONTH
+                      UNION SELECT 8 AS MONTH
+                      UNION SELECT 9 AS MONTH
+                      UNION SELECT 10 AS MONTH
+                      UNION SELECT 11 AS MONTH
+                      UNION SELECT 12 AS MONTH
+           ) as meses
+left join hopdong on month(hopdong.NgayLamHopDong) = meses.month
+ left join khachhang on khachhang.IDKhachHang = hopdong.IDKhachHang
+where year(hopdong.NgayLamHopDong) = '2019' or year(hopdong.NgayLamHopDong) is null or month(hopdong.NgayLamHopDong) is null
+group by meses.month
+order by meses.month;
+-- tark 10
+select hopdong.idhopdong,Ngaylamhopdong,NgayketThuc,TienDatCoc,count(hopdongchitiet.idhopdongchitiet) as 'solansudungdikem'
+from dichvudikem
+inner join hopdongchitiet on hopdongchitiet.iddichvudikem = dichvudikem.iddichvudikem
+inner join hopdong on hopdongchitiet.idhopdong = hopdong.idhopdong
+group by hopdongchitiet.idhopdongchitiet ;
+-- tark 11
+
+select*from loaikhach
+inner join khachhang on loaikhach.idloaikhach = khachhang.idloaikhach
+inner join hopdong on khachhang.idkhachhang = hopdong.idkhachhang
+inner join hopdongchitiet on hopdong.idhopdong = hopdongchitiet.idhopdong
+inner join dichvudikem on dichvudikem.iddichvudikem = hopdongchitiet.iddichvudikem
+where khachhang.idloaikhach = 1 and (khachhang.DiaChi ='Vinh' or khachhang.DiaChi = 'Quảng Ngãi');
+-- tark 12
+select hopdong.IdHopDong,nhanvien.HoTen as 'TenNhanVien',
+KhachHang.HoTen as 'TenKhachHang',khachhang.SDT as 'SoDienThoaiKhachHang',
+dichvu.TenDichVu,count(hopdongchitiet.IDHopDong) as 'SoLuongDichVuDikem ',
+hopdong.TienDatCoc
+from KhachHang
+inner join hopdong on khachhang.idkhachhang = hopdong.idkhachhang
+inner join DichVu on hopdong.iddichvu = dichvu.IDDichVu
+inner join nhanvien on hopdong.IdNhanVien = nhanvien.IdNhanVien
+inner join hopdongchitiet on hopdong.idhopdong = hopdongchitiet.idhopdong
+inner join dichvudikem on dichvudikem.iddichvudikem = hopdongchitiet.iddichvudikem
+where exists (
+select hopdong.NgayLamHopDong  from hopdong where hopdong.NgayLamHopDong between '2019-09-01' and '2019-12-31'  and hopdong.iddichvu = dichvu.iddichvu
+and not exists (select hopdong.NgayLamHopDong  from hopdong where hopdong.NgayLamHopDong between '2019-01-01' and '2019-06-30'and hopdong.iddichvu = dichvu.iddichvu)
+);
+-- tark 13
+
+select dichvudikem.TenDichVuDiKem,hopdong.idhopdong,count( hopdongchitiet.IDDichVuDiKem) as solan from dichvudikem
+inner join hopdongchitiet on hopdongchitiet.iddichvudikem = dichvudikem.iddichvudikem
+inner join hopdong on hopdong.idhopdong = hopdongchitiet.idhopdong
+where hopdongchitiet.IDDichVuDiKem >=1
+group by hopdongchitiet.IDDichVuDiKem
+having count( hopdongchitiet.IDDichVuDiKem) >=all( select max(solan) from(select dichvudikem.TenDichVuDiKem,hopdong.idhopdong,count( hopdongchitiet.IDDichVuDiKem) as 'solan' from dichvudikem
+inner join hopdongchitiet on hopdongchitiet.iddichvudikem = dichvudikem.iddichvudikem
+inner join hopdong on hopdong.idhopdong = hopdongchitiet.idhopdong
+where hopdongchitiet.IDDichVuDiKem >=1
+group by hopdongchitiet.IDDichVuDiKem) tmp);
+
+-- tark 14
