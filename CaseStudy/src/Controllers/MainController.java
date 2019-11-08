@@ -198,6 +198,8 @@ public class MainController {
                 break;
             case 5:
                 showInformationCustomer();
+                sc.nextLine();
+                backToMenu();
                 break;
             case 6:
                 addNewBookingResort();
@@ -545,36 +547,20 @@ public class MainController {
         Employee employee10 = new Employee(10, "Rung", "Hoa Thinh", 14);
         Map<Integer, Employee> map = new HashMap<Integer, Employee>();
         map.put(employee1.getId(), employee1);
-        map.put(employee1.getId(), employee2);
-        map.put(employee1.getId(), employee3);
-        map.put(employee1.getId(), employee4);
-        map.put(employee1.getId(), employee5);
-        map.put(employee1.getId(), employee6);
-        map.put(employee1.getId(), employee7);
-        map.put(employee1.getId(), employee8);
-        map.put(employee1.getId(), employee9);
-        map.put(employee1.getId(), employee10);
+        map.put(employee2.getId(), employee2);
+        map.put(employee3.getId(), employee3);
+        map.put(employee4.getId(), employee4);
+        map.put(employee5.getId(), employee5);
+        map.put(employee6.getId(), employee6);
+        map.put(employee7.getId(), employee7);
+        map.put(employee8.getId(), employee8);
+        map.put(employee9.getId(), employee9);
+        map.put(employee10.getId(), employee10);
         return map;
     }
 
-    private static void findInformationEmployee() {
-        Stack<Employee> stackEmployee = FillingCaBinNet.addToFilingCabinet();
-        System.out.print("Enter key of employee: ");
-        int key = sc.nextInt();
-        try {
-            while (true) {
-                if (stackEmployee.peek().getId() != key) {
-                    stackEmployee.pop();
-                } else {
-                    System.out.println(stackEmployee.peek().toString());
-                    break;
-                }
-            }
-        } catch (EmptyStackException ex) {
-            System.out.print("key invalid, please try again");
-            findInformationEmployee();
-        }
-    }
+
+
 
     private static void addCustomerBuyTicker4D() {
         ArrayList<Customer> listCus = FunctionWriteAndReadFileCSV.getCustomerFromCSV();
@@ -630,7 +616,25 @@ public class MainController {
                 backToMenu();
         }
     }
-
+    private static void findInformationEmployee() {
+        Stack<Employee> stackEmployee = FillingCaBinNet.addToFilingCabinet();
+        System.out.print("Enter key of employee: ");
+        int key = sc.nextInt();
+        try {
+            while (true) {
+                if (stackEmployee.peek().getId() != key) {
+                    stackEmployee.pop();
+                } else {
+                    System.out.println(stackEmployee.peek().toString());
+                    break;
+                }
+        }
+        } catch (EmptyStackException ex) {
+            System.out.print("Key Invalid,Please try again");
+        }
+        sc.nextLine();
+        backToMenu();
+    }
 }
 
 
